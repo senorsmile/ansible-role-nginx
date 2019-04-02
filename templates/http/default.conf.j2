@@ -172,10 +172,16 @@ server {
         health_check;
 {% endif %}
 
+{% if item.value.reverse_proxy.locations[location].proxy_set_headers is defined %}
+{% for header in item.value.reverse_proxy.locations[location].proxy_set_headers %}
+        proxy_set_header {{ header }};
+{% endfor %}
+{% else %}
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+{% endif %}
 {% if item.value.reverse_proxy.locations[location].websocket is defined and item.value.reverse_proxy.locations[location].websocket %}
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
