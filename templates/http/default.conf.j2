@@ -48,6 +48,12 @@ proxy_temp_path {{ item.value.reverse_proxy.proxy_temp_path.path }} {{ item.valu
 {% endif %}
 
 server {
+{% if item.value.error_log is defined %}
+    error_log {{ item.value.error_log }}{% if item.value.error_level is defined %} {{ item.value.error_level }}{% endif %};
+{% endif %}
+{% if item.value.access_log is defined %}
+    access_log {{ item.value.access_log }};
+{% endif %}
 {% if item.value.ssl is defined %}
     listen {{ item.value.port }} ssl{% if item.value.ssl.http2 is defined and item.value.ssl.http2 %} http2{% endif %};
     ssl_certificate {{ item.value.ssl.cert }};
