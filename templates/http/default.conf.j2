@@ -194,6 +194,9 @@ server {
 {% if item.value.reverse_proxy.locations[location].allow is defined %}
         allow {{ item.value.reverse_proxy.locations[location].allow }};
 {% endif %}
+{% if item.value.reverse_proxy.locations[location].expires is defined %}
+        expires {{ item.value.reverse_proxy.locations[location].expires | ternary("on", "off") }};
+{% endif %}
     }
 {% endfor %}
 {% endif %}
