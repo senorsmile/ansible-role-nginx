@@ -186,6 +186,11 @@ server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
 {% endif %}
+{% if item.value.reverse_proxy.locations[location].add_headers is defined %}
+{% for header in item.value.reverse_proxy.locations[location].add_headers %}
+        add_header {{ header }};
+{% endfor %}
+{% endif %}
     }
 {% endfor %}
 {% endif %}
