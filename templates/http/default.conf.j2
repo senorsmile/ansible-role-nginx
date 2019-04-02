@@ -191,6 +191,9 @@ server {
         add_header {{ header }};
 {% endfor %}
 {% endif %}
+{% if item.value.reverse_proxy.locations[location].allow is defined %}
+        allow {{ item.value.reverse_proxy.locations[location].allow }};
+{% endif %}
     }
 {% endfor %}
 {% endif %}
